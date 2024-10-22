@@ -1,7 +1,11 @@
 ﻿using EasyCashIdentityProject.DtoLayer.Dtos.AppUserDtos;
 using EasyCashIdentityProject.EntityLayer.Concrete;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
+using System.Net.Mail;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace EasyCashIdentityProject.PresentationLayer.Controllers
 {
@@ -26,7 +30,10 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
             if (ModelState.IsValid)
             {
                 Random random = new Random();
-                AppUser appUser = new AppUser()
+                int code;
+                code = random.Next(100000, 1000000);
+
+				AppUser appUser = new AppUser()
                 {
                     UserName = appUserRegisterDto.Username,
                     Name = appUserRegisterDto.Name,
@@ -35,11 +42,31 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
                     City = "aaaa",
                     District = "bbbb",
                     ImageUrl = "cccc",
-                    ConfirmCode = random.Next(100000,1000000)
+                    ConfirmCode = code,
                 };
                 var result = await _userManager.CreateAsync(appUser, appUserRegisterDto.Password);
                 if (result.Succeeded)
                 {
+                    MimeMessage mimeMessage = new MimeMessage();
+                    MailboxAddress mailBoxAdressFrom = new MailboxAddress("Easy Cash Admin", "ibrahimbektas03@gmail.com");
+                    MailboxAddress mailBoxAdressTo = new MailboxAddress("User", appUser.Email);
+
+                    mimeMessage.From.Add(mailBoxAdressFrom);
+                    mimeMessage.To.Add(mailBoxAdressTo);
+
+                    var bodyBuilder = new BodyBuilder();
+                    bodyBuilder.TextBody = "Kayıt İşlemini Gerçekleştirmek İçin Onay Kodunuz:" + code;
+                    mimeMessage.Body=bodyBuilder.ToMessageBody();
+
+                    mimeMessage.Subject = "Easy Cash Onay Kodu:";
+
+				    SmtpClient client = new SmtpClient();
+					client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+					client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("ibrahimbektas03@gmail.com", "scqh qvji gnzz ydjt");
+					client.Send(mimeMessage);
+                    client.Disconnect(true);
+
                     return RedirectToAction("Index", "ConfirmMail");
                 }
                 else
