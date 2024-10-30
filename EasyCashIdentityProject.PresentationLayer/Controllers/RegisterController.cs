@@ -48,7 +48,7 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
                 if (result.Succeeded)
                 {
                     MimeMessage mimeMessage = new MimeMessage();
-                    MailboxAddress mailBoxAdressFrom = new MailboxAddress("Easy Cash Admin", "ibrahimbektas03@gmail.com");
+                    MailboxAddress mailBoxAdressFrom = new MailboxAddress("Easy Cash Admin", "");
                     MailboxAddress mailBoxAdressTo = new MailboxAddress("User", appUser.Email);
 
                     mimeMessage.From.Add(mailBoxAdressFrom);
@@ -63,7 +63,7 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
 				    SmtpClient client = new SmtpClient();
 					client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
 					client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("ibrahimbektas03@gmail.com", "scqh qvji gnzz ydjt");
+                    client.Authenticate("ibrahimbektas03@gmail.com", "");
 					client.Send(mimeMessage);
                     client.Disconnect(true);
 
