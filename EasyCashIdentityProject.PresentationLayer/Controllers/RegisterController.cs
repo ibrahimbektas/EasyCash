@@ -63,7 +63,7 @@ namespace EasyCashIdentityProject.PresentationLayer.Controllers
 				    SmtpClient client = new SmtpClient();
 					client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
 					client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("ibrahimbektas03@gmail.com", "");
+                    client.Authenticate("", "");
 					client.Send(mimeMessage);
                     client.Disconnect(true);
 
