@@ -14,4 +14,4 @@ Email confirmed çalışması için RegisterConroller.cs dosyası 51. satır adm
                     MailboxAddress mailBoxAdressFrom = new MailboxAddress("Easy Cash Admin", " //Admin email ");
 
 Aynı şekilde 66. satırda admin email için Uygulama Kimliği Anahtarı yazmayı unutma
-                    client.Authenticate("ibrahimbektas03@gmail.com", " //Uygulama Kimliği Anahtarı ");
+                    client.Authenticate(" //Admin Email ", " //Uygulama Kimliği Anahtarı ");
