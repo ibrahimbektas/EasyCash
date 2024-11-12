@@ -1,5 +1,5 @@
 1- Kullanıcı kayıt sayfası oluşturuldu.(Kayıt için confirm ma,il eklendi.)
-2- Login sayfası oljuşturuldu.
+2- Login sayfası oluşturuldu.
 3- Layout sayfası oluşturuldu ve düzenlendi.
 4- Giriş yapan kullanıcının kullanıcı bilgilerini düzenleyebilmesi için MyAccounts sayfası oluşturuldu.
 5- Para transfer işlemi için SendMoney sayfası oluşturuldu.
